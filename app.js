@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var engine = require('ejs-locals');
 var routes = require('./routes/index');
 var users  = require('./routes/users');
+var search  = require('./routes/searcho');
+
 
 var app = express();
 
@@ -27,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/search', search);
+
 
 
 
