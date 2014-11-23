@@ -50,7 +50,7 @@ router.get('/twitter', function(req, res) {
 	var searchedfor = querystring["holiday"];
 
 	
-	T.get('search/tweets', { q: searchedfor + ' since:2014-11-11', count: 10 }, function(err, data, response) {
+	T.get('search/tweets', { q: searchedfor + ' since:2014-11-11', count: 20 }, function(err, data, response) {
 		
 		 var tweets = data.statuses;
 		  console.log("output " + tweets[0].text)

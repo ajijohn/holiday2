@@ -17,8 +17,8 @@ var passport = require('passport')
 , GoogleStrategy = require('passport-google').Strategy
 , FacebookStrategy = require('passport-facebook').Strategy;
 
-var FACEBOOK_APP_ID = '385908961579186';
-var FACEBOOK_APP_SECRET = '6bcd3c8c2bb17b0ac1f41982fd680457';
+var FACEBOOK_APP_ID = '742562262460197';
+var FACEBOOK_APP_SECRET = '38e76e28438e07867f7c95795a18e0c2';
 
 //passport
 passport.use(new GoogleStrategy({

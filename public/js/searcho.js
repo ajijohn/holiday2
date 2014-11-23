@@ -105,7 +105,7 @@ $(function () {
                     spotted.tracks.items[i].album.name + '" width="300"><p>Matched ' +
                     spotted.tracks.items[i].name + ' Track by ' +  spotted.tracks.items[i].artists[0].name +'</p></div>';
                     audio = new Audio(spotted.tracks.items[i].preview_url);
-                    
+                    audio.play();
                     this.$el.append(matchedElement);
                    // if (index != self.navs.length - 1) {
                    //     self.$el.append(self.arrowTemplate());
@@ -160,6 +160,75 @@ $(function () {
 	        }
 	    });
 	    new InfosHeader();
+	    
+	    
+	    
+	    var YoutubeHeader = Backbone.View.extend({
+	        el: $('#youtuby'),
+	        events: {
+                "click .stopp": "stop"
+            },
+	        initialize: function () {
+	            var self = this;
+	            self.spotted = {};
+	            $('#youtuby').empty();
+	            var search = document.getElementById('searched');
+	            $.get('/youtube/search/'+search.value , function (data) {
+	            	
+	            	
+	            	
+	            	console.log("searched for" + search.value )
+	                self.spotted = data;
+	            	self.data = data;
+	                self.render(data);
+	            });
+	            
+	        },
+	        stop: function () {
+                var self = this;
+                if (audio) {
+                    audio.pause();
+                    audio = null;
+                }
+            },
+	        template: _.template($('#youtubes').html()),
+	        render: function (spotted) {
+	            this.$el.append(this.template(this.spotted.attributes));
+	            
+	            var parent = '<div class="container"><div class="row"><div class="media col-md-4">';
+	            
+	            this.$el.append(parent);
+	            
+	            for (i = 0; i < spotted.length; i++) { 
+	               
+                    //self.$el.append(self.template(element.attributes));
+                    
+	            	
+	            	
+	            	
+                    //var matchedElement =  '' +
+                    //'<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' + spotted[i].id.videoId + '" frameborder="0" height="193" width="319"></iframe>';
+                
+	            	 var matchedElement =  '' +
+                    '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' + spotted[i].id.videoId + '" frameborder="0" height="289" width="478"></iframe>';
+                
+                    //var matchedElement =  '<img src="https://www.youtube.com/embed/' +
+                    //spotted[i].id.videoId + '" alt=" ' +
+                    //spotted[i].snippet.title + '" width="300"><p>Matched ' +
+                    //spotted[i].snippet.description + ' Track by ' +  spotted[i].snippet.description  +'</p></div>';
+                   
+                    
+                    this.$el.append(matchedElement);
+                 }
+                
+                this.$el.append('</div></div></div>');
+	            
+	            
+	        }
+	    });
+	    new YoutubeHeader();
+	    
+	    
 	    
 	    
 });

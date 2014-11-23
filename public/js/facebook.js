@@ -1,7 +1,7 @@
 $(function () {	
  window.fbAsyncInit = function() {
         FB.init({
-          appId      : '385908961579186',
+          appId      : '742562262460197',
           xfbml      : true,
           version    : 'v2.1'
         });
@@ -15,7 +15,7 @@ FB.api(
     "/v1.0/me",
     function (response) {
       if (response && !response.error) {
-        alert(response.name)
+        $('#fb-user').html(response.name);
       }
     }
 );
