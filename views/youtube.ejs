@@ -1,0 +1,5 @@
+<% layout('layout') %>
+<% for( i=0 ;i<youtubeFeed.length ;i++) {%>
+    <iframe src="https://www.youtube.com/embed/<%=youtubeFeed[i].id.videoId%>" frameborder="0" height="193" width="319"></iframe><%
+}%>
+<% script('/js/youtube.js') %>
