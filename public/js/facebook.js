@@ -15,7 +15,7 @@ FB.api(
     "/v1.0/me",
     function (response) {
       if (response && !response.error) {
-        alert(response.name)
+        $('#fb-user').html(response.name);
       }
     }
 );
@@ -38,3 +38,4 @@ FB.api(
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
 });
+
