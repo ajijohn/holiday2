@@ -1,9 +1,124 @@
 <% layout('layout') %>
- <div class="row">
- </div>
+
+
+  <!-info -->
+<div class="row" id="info">
+
+</div>
+
+
+
+<!-notes -->
+<div class="row" id="note">
+
+</div>
+
+<div class="row">
+  
+ 
+  <div class="col-sm-6 col-md-4">
+    <input type="hidden" id ="searched" name="searched" value="<%= searched %>"/>  
+    <ul class="list-group">
+    
+       <% for(var i=0; i<feed.length; i++) {%>
+  		<li class="list-group-item"><%=feed[i].text%></li>
+  	  <% } %>
+	</ul>
+    
+  </div>
+  
+  <div class="col-sm-6 col-md-8">
+    <div class="media">
+      <a class="media-left" href="#">
+        <img data-src="holder.js/64x64" alt="Generic placeholder image">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">Top aligned media</h4>
+        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+      </div>
+    </div>
+    <div class="media">
+      <a class="media-left media-middle" href="#">
+        <img data-src="holder.js/64x64" alt="Generic placeholder image">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">Middle aligned media</h4>
+        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+      </div>
+    </div>
+    <div class="media">
+      <a class="media-left media-bottom" href="#">
+        <img data-src="holder.js/64x64" alt="Generic placeholder image">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">Bottom aligned media</h4>
+        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+</div>
+
+<!-spotify -->
+<div class="row" id="spot">
+
+</div>
 
 <script type="text/template" id="back">
     <a href="#" class="btn btn-default">Go Back</a>
+</script>
+
+<script type="text/template" id="spotify">
+    <div class="panel panel-default">
+  		<div class="panel-heading">
+    	   <h3 class="panel-title">Spotify Tracks</h3>
+        </div>
+        <div class="panel-body">
+    		     
+    		     
+    		    <div class="btn-group" role="group" aria-label="hey">
+  						<button type="button" class="btn btn-danger">Pause</button>
+  						<button type="button" class="btn btn-success">Play</button>
+  						<button type="button" class="btn btn-warning">Skip</button>
+				</div>
+    		     
+    		     
+  	    </div>
+    </div>
+</script>
+
+<script type="text/template" id="notes">
+    <div class="panel panel-default">
+  		<div class="panel-heading">
+    	   <h3 class="panel-title">My journal</h3>
+        </div>
+        <div class="panel-body">
+    		
+    		<div class="input-group input-group-lg">
+  				<span class="input-group-addon">@</span>
+  				<input type="textarea" class="form-control" placeholder="Write your journal log">
+			</div>
+			
+			<h3>Tags <span class="label label-default">Holiday</span><span class="nt"> </span><span class="label label-success">Musings</span><span class="nt"> </span><span class="label label-warning">Tips</span></h3>
+			
+  	    </div>
+    </div>
+</script>
+
+<script type="text/template" id="infos">
+    <div class="panel panel-default">
+  		<div class="panel-heading">
+    	   <h3 class="panel-title">Info</h3>
+        </div>
+        <div class="panel-body">
+    		Journal content
+  	    </div>
+    </div>
 </script>
 
 <% script('/js/searcho.js') %>

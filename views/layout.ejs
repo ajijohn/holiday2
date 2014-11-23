@@ -43,17 +43,21 @@
         <h1>Your Holiday</h1>
         <p class="lead">Search your favorite holiday.</p>
         
-        <form role="form">
+        <form role="form" action="/search/twitter" method="get">
         
          <div class="row">
             <div class="form-group">
                 <label for="code">holiday name</label>
-                <input type="text" class="form-control input-lg">
+                <input type="text" id="holiday" name="holiday" class="form-control input-lg">
             </div>
          </div>
         
-         <p><a class="btn btn-lg btn-success" href="/search" role="button">Search</a></p>
-        
+         		<div class="form-actions">
+         			<button type="submit" class="btn btn-block btn-lg btn-danger">
+                        <small>Search</small>
+                    </button>
+                    
+        		</div>
          </form>
       </div>
 
@@ -82,6 +86,9 @@
 	<!-- date formatting-->
 	<script src="/js/vendor/moment/moment.min.js"></script>
  
+ 	<!-- facebook-->
+	<script src="/js/facebook.js"></script>
+	
     <!-- page specific -->
 	<%- scripts %>
     
