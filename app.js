@@ -9,6 +9,9 @@ var routes = require('./routes/index');
 var users  = require('./routes/users');
 var search  = require('./routes/searcho');
 var youtube  = require('./routes/youtube');
+var loginGoogle  = require('./routes/loginGoogle');
+var loginFacebook  = require('./routes/loginFacebook');
+
 
 var passport = require('passport')
 , GoogleStrategy = require('passport-google').Strategy
@@ -71,7 +74,7 @@ app.use('/users', users);
 app.use('/search', search);
 app.use('/youtube', youtube);
 
-app.use('/loginGoogle', loginGoogle);
+//app.use('/loginGoogle', loginGoogle);
 app.use('/loginFacebook', loginFacebook);
 
 // catch 404 and forward to error handler
