@@ -13,6 +13,11 @@ router.get('/', passport.authenticate('facebook'));
 // authentication has failed.
 router.get('/return', 
   passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/loginFacebook' }));
+                                      failureRedirect: '/facebook' }));
+
+router.get('/logout', function(req, res){
+	  req.logout();
+	  res.redirect('/');
+	});
 
 module.exports = router;
