@@ -1,8 +1,9 @@
 // These is how we call the modules we are going to use in this app
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
-var config = require('./auth.js');
+var config = require('./config/auth.js');
 // Expres 4 new dependencies
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -14,55 +15,13 @@ var routes = require('./routes/index');
 var users  = require('./routes/users');
 var search  = require('./routes/searcho');
 var youtube  = require('./routes/youtube');
-var loginGoogle  = require('./routes/loginGoogle');
-var loginFacebook  = require('./routes/loginFacebook');
+//var facebook  = require('./routes/facebook');
 // Passport modules to login w/ different services
-var passport = require('passport')
-, GoogleStrategy = require('passport-google').Strategy
-, FacebookStrategy = require('passport-facebook').Strategy
-, app = express();
-
-
-//passport
-passport.use(new GoogleStrategy({
-  returnURL: 'http://localhost:3000/login/return',
-  realm: 'http://localhost:3000/'
-},
-function(identifier, profile, done) {
-  User.findOrCreate({ openId: identifier }, function(err, user) {
-    done(err, user);
-  });
-}
-));
-
-// serialize and deserialize
-passport.serializeUser(function(user,done){
-	done(null,user);
-});
-passport.deserializeUser(function(obj,done){
-	done(null,obj);
-});
-
-//config
-passport.use(new FacebookStrategy({
-  clientID: config.facebook.api_key,
-  clientSecret: config.facebook.api_secret,
-  callbackURL: config.facebook.callback_url
-},
-function(accessToken, refreshToken, profile, done) {
-	process.nextTick(function() {
-		return done(null, profile);
-	});
-	}
-));
-
+var passport = require('passport');
 // view engine setup
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-
-
 //Read more: http://jaspreetchahal.org/expressjs-exposing-variables-and-session-to-jade-templates/#ixzz3JtjwuHno
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -74,34 +33,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+require('./config/passport')(passport); // pass passport for configuration
+require('./routes/facebook.js')(app, passport);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/search', search);
 app.use('/youtube', youtube);
-
-//app.use('/loginGoogle', loginGoogle);
-//app.use('/auth/facebook', loginFacebook);
-
-app.get('/auth/facebook',
-	passport.authenticate('facebook'),
-		function(req, res){
-});
-
-app.get('/auth/facebook/callback',
-	passport.authenticate('facebook', { 
-		failureRedirect: '/' }),
-		function(req, res) {
-			res.redirect('/');
-		});
-		
-app.get('/logout', function(req, res){
-  req.logout();
-  setTimeout(function() {
-    res.redirect('/');
-  }, 2000);
-});
-
+//app.use('/auth/facebook', facebook);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
