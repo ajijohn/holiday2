@@ -1,24 +1,27 @@
+// These is how we call the modules we are going to use in this app
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+var config = require('./auth.js');
+// Expres 4 new dependencies
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// Engine for templating
 var engine = require('ejs-locals');
+// User defined routes
 var routes = require('./routes/index');
 var users  = require('./routes/users');
 var search  = require('./routes/searcho');
 var youtube  = require('./routes/youtube');
 var loginGoogle  = require('./routes/loginGoogle');
 var loginFacebook  = require('./routes/loginFacebook');
-
-
+// Passport modules to login w/ different services
 var passport = require('passport')
 , GoogleStrategy = require('passport-google').Strategy
-, FacebookStrategy = require('passport-facebook').Strategy;
+, FacebookStrategy = require('passport-facebook').Strategy
+, app = express();
 
-var FACEBOOK_APP_ID = '742562262460197';
-var FACEBOOK_APP_SECRET = '38e76e28438e07867f7c95795a18e0c2';
 
 //passport
 passport.use(new GoogleStrategy({
@@ -32,20 +35,26 @@ function(identifier, profile, done) {
 }
 ));
 
+// serialize and deserialize
+passport.serializeUser(function(user,done){
+	done(null,user);
+});
+passport.deserializeUser(function(obj,done){
+	done(null,obj);
+});
+
+//config
 passport.use(new FacebookStrategy({
-  clientID: FACEBOOK_APP_ID,
-  clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: "http://localhost:3000/"
+  clientID: config.facebook.api_key,
+  clientSecret: config.facebook.api_secret,
+  callbackURL: config.facebook.callback_url
 },
 function(accessToken, refreshToken, profile, done) {
-  User.findOrCreate({ openId: identifier }, function(err, user) {
-    done(err, user);
-  });
-}
+	process.nextTick(function() {
+		return done(null, profile);
+	});
+	}
 ));
-
-
-var app = express();
 
 // view engine setup
 app.engine('ejs', engine);
@@ -72,7 +81,27 @@ app.use('/search', search);
 app.use('/youtube', youtube);
 
 //app.use('/loginGoogle', loginGoogle);
-app.use('/auth/facebook', loginFacebook);
+//app.use('/auth/facebook', loginFacebook);
+
+app.get('/auth/facebook',
+	passport.authenticate('facebook'),
+		function(req, res){
+});
+
+app.get('/auth/facebook/callback',
+	passport.authenticate('facebook', { 
+		failureRedirect: '/' }),
+		function(req, res) {
+			res.redirect('/');
+		});
+		
+app.get('/logout', function(req, res){
+  req.logout();
+  setTimeout(function() {
+    res.redirect('/');
+  }, 2000);
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
