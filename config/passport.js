@@ -1,9 +1,10 @@
-// Load the FB strategy module to use with passport
+// Load service strategy modules to use with passport
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // Load authentication variables
 var auth = require('./auth.js');
 
-module.exports = function(passport) {
+module.exports = function(passport,google2) {
 	// serialize the user to the session 
 	passport.serializeUser(function(user,done){
 		done(null,user);
@@ -24,5 +25,18 @@ module.exports = function(passport) {
 				return done(null, profile);
 			});
 		}
+	));
+	// Google
+	// Login config
+	passport.use(new GoogleStrategy({
+		clientID: 	  auth.google.clientID,
+ 		clientSecret: auth.google.clientSecret,
+		callbackURL:  auth.google.callbackURL
+	},
+		function(accessToken, refreshToken, profile, done) {
+	    	process.nextTick(function () {
+	    		return done(null, profile);
+    		});
+	  	}
 	));
 }

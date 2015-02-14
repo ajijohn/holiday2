@@ -3,7 +3,6 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
-var config = require('./config/auth.js');
 // Expres 4 new dependencies
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -15,7 +14,6 @@ var routes = require('./routes/index');
 var users  = require('./routes/users');
 var search  = require('./routes/searcho');
 var youtube  = require('./routes/youtube');
-//var facebook  = require('./routes/facebook');
 // Passport modules to login w/ different services
 var passport = require('passport');
 // view engine setup
@@ -35,11 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 require('./config/passport')(passport); // pass passport for configuration
 require('./routes/facebook.js')(app, passport);
+require('./routes/google.js')(app, passport);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/search', search);
 app.use('/youtube', youtube);
-//app.use('/auth/facebook', facebook);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

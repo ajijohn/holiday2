@@ -23,7 +23,10 @@
     "youtube-api":"*"	,
     "passport":"*",
     "passport-google":"*",
-    "passport-facebook":"*"
+    "passport-google-oauth":"*",
+    "passport-facebook":"*",
+    "googleapis":"*",
+    "passport-google-oauth2": ">= 0.0.0"
   },
   "description": "This repository demonstrates the usage of sequelize within an express application. The implemented logic is a simple task tracking tool.",
   "main": "app.js",
